@@ -1,0 +1,24 @@
+gridtype = projection
+gridsize = 115600
+xsize = 340
+ysize = 340
+xname = xc
+xlongname = "x coordinate of projection (eastings)"
+xunits = "km"
+yname = yc
+ylongname = "y coordinate of projection (northings)"
+yunits = "km"
+xfirst = -12750
+xinc = 75
+yfirst = 12750
+yinc = -75
+grid_mapping = Polar_Stereographic_Grid
+grid_mapping_name = polar_stereographic
+straight_vertical_longitude_from_pole = 0.f
+latitude_of_projection_origin = 90.f
+standard_parallel = 90.f
+false_easting = 0.f
+false_northing = 0.f
+semi_major_axis = 6378273.f
+semi_minor_axis = 6356890.f
+proj4_string = "+proj=stere +a=6378273 +b=6356889.44891 +lat_0=90 +lat_ts=90 +lon_0=0"

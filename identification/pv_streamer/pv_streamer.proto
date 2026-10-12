@@ -1,0 +1,54 @@
+syntax = "proto2";
+
+message VectorGeo {
+  optional float level = 100;
+  optional float lat = 101;
+  optional float lon = 102;
+}
+
+message Vector {
+  optional float z = 1;
+  optional float y = 2;
+  optional float x = 3;
+}
+
+/* The extended properties with all the features of a PV streamer.
+ */
+message Properties {
+
+  optional VectorGeo centroid = 1;
+
+  optional float volume_km3 = 2;
+  optional float volume_km2K = 3;
+  optional float area_km2 = 4;
+
+  // Geo bounding box
+  optional VectorGeo min_bbox = 5;
+  optional VectorGeo max_bbox = 6;
+
+  optional float max_pv = 7;
+  optional float avg_pv = 8;
+
+  optional bool is_cutoff = 9; // cutoff defined as not having a connection to stratospheric reservoir for given data.
+
+  optional float length = 10; // length in 2d, also in 3d as max distance from reservoir
+  optional float length_ratio = 11;  // average distance divided by max distance. Values near 1 indicate that most
+                                      // mass is far away from reservoir, which might forecast cutoff formation
+
+
+  // Main axes of feature moments (e.g. ellipsoid axes). 2D: only major and minor, 3D: all 3.
+  // currently in image space for stereographic projection
+  optional Vector major_axis = 12;
+  optional Vector medium_axis = 13;
+  optional Vector minor_axis = 14;
+
+  // orientation only 2d?
+  optional float major_axis_orientation_deg = 15;
+
+
+
+  //optional float meridional_eccentricity = 115;
+  //optional float equatorial_eccentricity = 116;
+
+
+}

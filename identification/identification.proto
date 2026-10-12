@@ -1,0 +1,104 @@
+
+/* This is the default protobuf file for the general structure of the data. It does not compile by it alone but needs
+   to be extended by specific methods. See for example the template/template.proto
+
+   Properties can be extended by the user to define the properties of the detected features. For example properties of
+   features might include their size, intensity, orientation, or more complex self-computed heuristics.
+ */
+
+message VoxelData {
+  repeated float coordinate = 1;
+  optional float value = 2;
+}
+message VoxelRepresentation {
+  optional string desc = 1;
+  repeated string dims = 2;
+  repeated VoxelData voxel_data = 3;
+}
+
+/*
+message VertexData {
+  repeated float position = 1;
+  optional float value = 2;
+}
+message FaceData {
+  repeated uint32 vertices = 1; // reference to vertex_list
+  optional float value = 2;
+}
+message BoundaryRepresentation {
+  optional string desc = 1;
+  repeated VertexData vertex_data = 2;
+  repeated FaceData face_data = 3;
+}
+*/
+
+/* Nodes of the tracking graph.
+   Each node is defined by its time and the feature itself.
+ */
+message GraphNode {
+  required string time = 1;
+  required Feature feature = 2;
+}
+
+/* Connections of the tracking graph. A connection is defined as one node (parent, the key feature),
+   and all to its connected nodes. (list of children, typically of the consecutive timestep)
+   TODO maybe rewrite to allow only single children (1 connection)
+ */
+message GraphConnection {
+  required GraphNode parent = 1;
+  repeated GraphNode children = 2;
+}
+
+/* The tracking graph is defined by a set of above connections.
+   Edges do not necessarily have to be of consecutive timesteps. These connections fully define the graph.
+ */
+message FeatureGraph {
+  repeated GraphConnection edges = 1;
+}
+
+/* Feature represents one detected feature in the dataset for one single point in time with its current properties.
+ * It also can contain a form of data representation, like volume (list of voxels), lines or boundaries.
+ */
+message Feature {
+        required int32 id = 1;
+        optional VoxelRepresentation voxel_rep = 3;
+        // repeated BoundaryRepresentation boundary_rep = 4;
+        optional Properties properties = 5;
+
+        optional bool flag = 6;
+}
+
+/* Timestep represents the state of the data for one single point in time within one time series. It is defined by its
+ * valid time and contains a list of features detected at this point in time.
+ */
+message Timestep {
+      required string time = 1;
+      repeated Feature features = 2;
+}
+
+/* TrackableSet represents one trackable set (one time series) in the dataset. It is defined by some meta data (member,
+ * initialization time of reforecast, ...). It contains the timestep list, where each entry represents a (re)forecast
+ * point in time in the time series. It also can contain the generated graph and/or the tracks.
+ */
+message TrackableSet {
+    optional string init_time = 1;
+    optional uint32 member = 2;
+    optional float level = 3;
+
+    repeated Timestep timesteps = 4;
+    optional FeatureGraph graph = 5;
+    repeated FeatureGraph tracks = 6; // tracks as list of (disjunct) sub graphs
+}
+
+/* DatasetDescription represents the description of the entire dataset Besides some meta data it contains a list of
+ * trackable set. A trackable set is a series of timestamps of one single (re)forecast, e.g. one member. The tracking
+ * makes use of the fact, that features in each set (e.g. each member) can be tracked in parallel.
+ */
+message DatasetDescription {
+  optional string name = 1;
+  optional string file = 2;
+  required string run_time = 3;
+
+  repeated TrackableSet sets = 4;
+
+}

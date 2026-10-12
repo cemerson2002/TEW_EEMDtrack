@@ -1,0 +1,55 @@
+syntax = "proto2";
+
+message LatLonPoint {
+  optional float lat = 1;
+  optional float lon = 2;
+  
+  optional float lev = 3;
+}
+
+message VolumeRep {
+    repeated LatLonPoint points = 1;
+}
+
+
+message BoundingBox {
+  optional LatLonPoint min = 1;
+  optional LatLonPoint max = 2;
+}
+
+message Wavetrough {
+  repeated LatLonPoint line_pts = 1;
+  optional BoundingBox bb = 2;
+  optional float length_deg = 3;
+
+}
+
+message Ellipsoid {
+  optional LatLonPoint center = 1;
+  optional LatLonPoint major_axis = 2;
+  optional LatLonPoint medium_axis = 3;
+  optional LatLonPoint minor_axis = 4;
+    
+    
+}
+
+/* The extended properties with all the features of a PV streamer.
+ */
+message Properties {
+  optional Wavetrough wt = 1;
+  optional BoundingBox bb = 2;
+  optional float intensity = 3;
+  optional float max_pv = 4;
+  optional float avg_pv = 5;
+  optional float volume = 6;
+  optional LatLonPoint com = 7; // center of mass
+  optional Ellipsoid ell = 8;
+  optional Ellipsoid ell_minvol = 9;
+  optional Ellipsoid ell_sqdist = 10;
+  // Moments...
+  
+  optional VolumeRep volume_rep = 20;
+  
+}
+
+// import "identification.proto";

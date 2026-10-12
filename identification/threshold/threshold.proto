@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+/* This file contains the feature description for an identified feature.
+ * The "Properties" message is required and contains all the properties of an feature.
+ */
+
+message MaskArray {
+    repeated int32 shape = 1;
+    required bytes data = 2;
+    required bool zlib = 3;
+}
+
+message Properties {
+    required MaskArray mask = 1;
+    required float outer_threshold = 2;
+    required float inner_threshold = 3;
+    required string comparison_operator = 4;
+}
+

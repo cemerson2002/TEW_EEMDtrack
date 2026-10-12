@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+message LatLonPoint {
+  optional float lat = 1;
+  optional float lon = 2;
+}
+
+
+message Properties {
+
+  optional LatLonPoint pos = 1;
+  optional bool is_ccw = 2;
+  optional float rel_vort = 3;
+}
+
+// import "identification.proto";

@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+message Pos {
+  required float lat = 1;
+  required float lon = 2;
+}
+
+message Properties {
+  required float min_pressure = 1;
+  required Pos min_pressure_pos = 2;
+
+}
+

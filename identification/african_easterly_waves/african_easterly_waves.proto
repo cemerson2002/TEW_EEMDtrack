@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+message LatLonPoints {
+  optional float lat = 1;
+  optional float lon = 2;
+}
+
+message BoundingBox {
+  optional LatLonPoints min = 1;
+  optional LatLonPoints max = 2;
+}
+
+/* The extended properties with all the features of a PV streamer.
+ */
+message Properties {
+
+  repeated LatLonPoints line_pts = 1;
+  optional BoundingBox bb = 2;
+  optional float length_deg = 3;
+  optional float avg_cv_along_wt = 4;
+}
+
+// import "identification.proto";

@@ -1,0 +1,24 @@
+syntax = "proto2";
+
+/* This file contains the feature description for an identified feature.
+ * The "Properties" message is required and contains all the properties of an feature.
+ * In this template, for example, each feature is identified by its centroid, a size and a list of strings.
+
+ * When implementing your own strategy, this template can be copied and renamed.
+ */
+message Properties {
+  // Fields can be 'required' or 'optional'. lists have 'repeated' as keyword.
+  optional Vector centroid = 1;
+  optional int32 size = 2;
+  repeated string list_of_something = 3;
+
+}
+
+/*
+ * An attribute can itself be a 'message'.
+ */
+message Vector {
+  required float x = 1;
+  required float y = 2;
+  optional float z = 3; // optional 3rd dimension if it should work on 2D and 3D data
+}
